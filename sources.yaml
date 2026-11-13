@@ -1,0 +1,151 @@
+# v1 sources for Caseline: official USCIS and State Department guidance only.
+# Every entry is checked live by scripts/check_sources.py; `expect` is text that must
+# appear in the fetched page (or PDF text) so a redirect to the wrong page fails.
+# Scope: family-based path (I-130, I-485, I-864, I-765, I-131, NVC, DS-260).
+
+sources:
+  # --- Form instructions (PDF) ---
+  - id: i130-instructions
+    publisher: USCIS
+    kind: form-instructions
+    url: https://www.uscis.gov/sites/default/files/document/forms/i-130instr.pdf
+    expect: "I-130"
+  - id: i485-instructions
+    publisher: USCIS
+    kind: form-instructions
+    url: https://www.uscis.gov/sites/default/files/document/forms/i-485instr.pdf
+    expect: "I-485"
+  - id: i864-instructions
+    publisher: USCIS
+    kind: form-instructions
+    url: https://www.uscis.gov/sites/default/files/document/forms/i-864instr.pdf
+    expect: "I-864"
+  - id: i765-instructions
+    publisher: USCIS
+    kind: form-instructions
+    url: https://www.uscis.gov/sites/default/files/document/forms/i-765instr.pdf
+    expect: "I-765"
+  - id: i131-instructions
+    publisher: USCIS
+    kind: form-instructions
+    url: https://www.uscis.gov/sites/default/files/document/forms/i-131instr.pdf
+    expect: "I-131"
+
+  # --- Form landing pages ---
+  - id: i130-page
+    publisher: USCIS
+    kind: form-page
+    url: https://www.uscis.gov/i-130
+    expect: "I-130"
+  - id: i485-page
+    publisher: USCIS
+    kind: form-page
+    url: https://www.uscis.gov/i-485
+    expect: "I-485"
+  - id: i864-page
+    publisher: USCIS
+    kind: form-page
+    url: https://www.uscis.gov/i-864
+    expect: "I-864"
+  - id: i765-page
+    publisher: USCIS
+    kind: form-page
+    url: https://www.uscis.gov/i-765
+    expect: "I-765"
+  - id: i131-page
+    publisher: USCIS
+    kind: form-page
+    url: https://www.uscis.gov/i-131
+    expect: "I-131"
+
+  # --- Fees ---
+  - id: fee-schedule
+    publisher: USCIS
+    kind: fees
+    url: https://www.uscis.gov/g-1055
+    expect: "Fee"
+
+  # --- USCIS Policy Manual ---
+  # Whole parts, not single chapters: ingest (step 2) fetches every chapter the
+  # part page links to. `expect` is the part's own title.
+  - id: pm-vol1-partE
+    publisher: USCIS
+    kind: policy-manual-part
+    url: https://www.uscis.gov/policy-manual/volume-1-part-e
+    expect: "Part E - Adjudications"
+  - id: pm-vol6-partB
+    publisher: USCIS
+    kind: policy-manual-part
+    url: https://www.uscis.gov/policy-manual/volume-6-part-b
+    expect: "Part B - Family-Based Immigrants"
+  - id: pm-vol7-partA
+    publisher: USCIS
+    kind: policy-manual-part
+    url: https://www.uscis.gov/policy-manual/volume-7-part-a
+    expect: "Part A - Adjustment of Status Policies and Procedures"
+  - id: pm-vol7-partB
+    publisher: USCIS
+    kind: policy-manual-part
+    url: https://www.uscis.gov/policy-manual/volume-7-part-b
+    expect: "Part B - 245(a) Adjustment"
+  - id: pm-vol10-partA
+    publisher: USCIS
+    kind: policy-manual-part
+    url: https://www.uscis.gov/policy-manual/volume-10-part-a
+    expect: "Part A - Employment Authorization Policies and Procedures"
+
+  # --- Priority dates / Visa Bulletin ---
+  - id: uscis-filing-charts
+    publisher: USCIS
+    kind: visa-bulletin
+    url: https://www.uscis.gov/green-card/green-card-processes-and-procedures/visa-availability-priority-dates/adjustment-of-status-filing-charts-from-the-visa-bulletin
+    expect: "Visa Bulletin"
+  # travel.state.gov returns HTTP 403 to scripted clients and to WebFetch, so
+  # nothing below has been confirmed from here. `verified: false` until Eric opens
+  # each in a browser. Step 2 needs another way to get these pages.
+  - id: visa-bulletin-index
+    verified: false
+    publisher: State Department
+    kind: visa-bulletin
+    url: https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin.html
+    expect: "Visa Bulletin"
+
+  # --- NVC / consular processing ---
+  - id: iv-process-overview
+    verified: false
+    publisher: State Department
+    kind: nvc
+    url: https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process.html
+    expect: "Immigrant Visa"
+  - id: nvc-step-pay-fees
+    verified: false
+    publisher: State Department
+    kind: nvc
+    url: https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition/step-2-begin-nvc-processing/step-3-pay-fees.html
+    expect: "fee"
+  - id: nvc-step-ds260
+    verified: false
+    publisher: State Department
+    kind: nvc
+    url: https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition/step-2-begin-nvc-processing/step-4-submit-a-visa-application-form.html
+    expect: "DS-260"
+  - id: nvc-step-civil-docs
+    verified: false
+    publisher: State Department
+    kind: nvc
+    url: https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition/step-2-begin-nvc-processing/step-5-collect-supporting-documents.html
+    expect: "document"
+
+  # --- Refusals and administrative processing ---
+  - id: administrative-processing
+    verified: false
+    publisher: State Department
+    kind: refusal
+    url: https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/administrative-processing-information.html
+    expect: "221(g)"
+  - id: visa-denials
+    verified: false
+    publisher: State Department
+    kind: refusal
+    url: https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/visa-denials.html
+    expect: "221(g)"
